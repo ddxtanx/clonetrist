@@ -1,0 +1,28 @@
+{
+  "name": "pintrest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ddxtanx/pintrest.git"
+  },
+  "author": "Garrett Credi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ddxtanx/pintrest/issues"
+  },
+  "homepage": "https://github.com/ddxtanx/pintrest#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "client-sessions": "^0.8.0",
+    "express": "^4.15.2",
+    "mongodb": "^2.2.26",
+    "mongoose": "^4.9.7",
+    "twig": "^1.10.4"
+  }
+}

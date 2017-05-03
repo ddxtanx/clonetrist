@@ -11,7 +11,7 @@ passport.use(new GithubStrategy({
     callbackURL: config.github.callback
   },
     function(accessToken, refreshToken, profile, done){
-      User.findOrCreate({
+      User.findOneAndUpdate({
           githubId: profile.id
       }, function(err, user){
           if(err) throw err;

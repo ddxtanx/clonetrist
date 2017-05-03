@@ -10,21 +10,22 @@ passport.use(new GithubStrategy({
     callbackURL: config.github.callback
   },
     function(accessToken, refreshToken, profile, done){
-      console.log(profile)
+      console.log(profile);
+      var userData = {
+        username: profile.login,
+        email: profile.email,
+        id: profile.id,
+        password: "",
+        type: "github"
+      };
+      console.log(userData);
       console.log("In github.js");
-    // update the user if s/he exists or add a new user
     User.find({
       id: profile.id
     }, function(err, users){
       if(err) throw err;
       if(users.length==0){
-        User.create({
-          username: profile.login,
-          email: profile.email,
-          id: profile.id,
-          password:"",
-          type:"github"
-        }, function(err, data){
+        User.create(userData, function(err, data){
           if(err) throw err;
           console.log("User created "+data);
           return data;

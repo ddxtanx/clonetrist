@@ -2,7 +2,7 @@ var info = {
     github:{
         clientId: process.env.clientId,
         clientSecret: process.env.clientSecret,
-        callback: "https://clonetrist.herokuapp.com/auth/github/callback"
+        callback: "https://clonetrist-ddxtanx.herokuapp.com/auth/github/callback"
     },
     twitter:{
         CONSUMER_KEY: process.env.CONSUMER_KEY,

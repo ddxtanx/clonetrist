@@ -3,15 +3,17 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     sessions = require('client-sessions'),
     account = require("./app/account.js"),
-    morgan = require('morgan'),
-    twitterAuth = require("./app/auth/twitter.js");
+    twitterAuth = require("./app/auth/twitter.js"),
+    passport = require('passport');;
 app.set("views", "./public");
 app.use(express.static("./public"), bodyParser(), sessions({
   cookieName: 'session',
   secret: process.env.SESSION_SECRET,
   duration: 30 * 60 * 1000,
   activeDuration: 30 * 60 * 1000,
-}), morgan('combined'));
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 function checkIn(req, res, callback){
     if(!req.session.active){
         console.log("Catching request to login only area");
@@ -46,15 +48,14 @@ app.post("/register", function(req, res){
 app.post("/login", function(req, res){
     account.login(req, res);
 });
-app.get("/auth/login", twitterAuth.authenticate("twitter"));
-app.get("/auth/callback", function(req, res){
-    console.log("callback");
-    twitterAuth.authenticate('twitter', { failureRedirect: '/login' }),
-    function(req, res) {
-        res.redirect('/');
-        res.end();
-    };
+app.get("/auth/twitter/login", twitterAuth.authenticate("twitter"));
+app.get('/auth/twitter/callback',
+  twitterAuth.authenticate('twitter', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication
+    res.json(req.user);
 });
+
 app.get("/logout", function(req, res){
     req.session.destroy();
     req.session.active = false;

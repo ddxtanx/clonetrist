@@ -10,7 +10,7 @@ passport.use(new GithubStrategy({
     callbackURL: config.github.callback
   },
     function(accessToken, refreshToken, profile, done){
-      console.log(profile);
+      profile = profile._json;
       var userData = {
         username: profile.login,
         email: profile.email,
@@ -18,20 +18,20 @@ passport.use(new GithubStrategy({
         password: "",
         type: "github"
       };
-      console.log(userData);
       console.log("In github.js");
     User.find({
-      id: profile.id
+      id: profile.id,
+      type: "github"
     }, function(err, users){
       if(err) throw err;
       if(users.length==0){
         User.create(userData, function(err, data){
           if(err) throw err;
           console.log("User created "+data);
-          return data;
+          return done(err, data);
         });
       } else{
-        
+        return done(err, users[0]);
       }
     })
     }

@@ -9,25 +9,32 @@ passport.use(new TwitterStrategy({
     callbackURL: config.twitter.callback
   },
   function(accessToken, refreshToken, profile, done) {
+    profile = profile._json;
     console.log(profile);
     console.log("In twitter.js");
+    var userData = {
+          username: profile.screen_name,
+          email: profile.email||"",
+          id: profile.id,
+          password: "",
+          type:"twitter"
+    }
+    console.log(userData);
     User.find({
-      id: profile.id
+      id: profile.id,
+      type: "twitter"
     }, function(err, users){
       if(err) throw err;
       if(users.length==0){
-        User.create({
-          username: profile.login,
-          email: profile.email,
-          id: profile.id,
-          type:"github"
-        }, function(err, data){
+          console.log("creating");
+        User.create(userData, function(err, data){
           if(err) throw err;
           console.log("User created "+data);
-          return data
+          return done(err, data)
         });
       } else{
-        
+        console.log("finding");
+        return done(err, users[0]);
       }
     });
   }

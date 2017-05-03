@@ -4,7 +4,8 @@ var express = require('express'),
     sessions = require('client-sessions'),
     account = require("./app/account.js"),
     twitterAuth = require("./app/auth/twitter.js"),
-    passport = require('passport');;
+    passport = require('passport'),
+    githubAuth = require("./app/auth/github.js");
 app.set("views", "./public");
 app.use(express.static("./public"), bodyParser(), sessions({
   cookieName: 'session',
@@ -55,7 +56,10 @@ app.get('/auth/twitter/callback',
     // Successful authentication
     res.json(req.user);
 });
-
+app.get("/auth/github/login", githubAuth.authenticate("github"));
+app.get("/auth/github/callback", githubAuth.authenticate("github", {successRedirect:"/", failureRedirect:"/login"}), function(req,res){
+    res.json(req.user);
+})
 app.get("/logout", function(req, res){
     req.session.destroy();
     req.session.active = false;

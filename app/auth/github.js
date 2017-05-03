@@ -12,24 +12,22 @@ passport.use(new GithubStrategy({
     function(accessToken, refreshToken, profile, done){
       console.log(profile)
       console.log("In github.js");
-    var searchQuery = {
-      id: profile.id
-    };
-
-    var updates = {
-      username: profile.login,
-      email: profile.email,
-      id: profile.id
-    };
-
     // update the user if s/he exists or add a new user
-    User.findOrCreate(searchQuery, updates, function(err, user) {
-      if(err) {
-        return done(err);
-      } else {
-        return done(null, user);
+    User.find({
+      id: profile.id
+    }, function(err, users){
+      if(err) throw err;
+      if(users.length==0){
+        User.create({
+          username: profile.login,
+          email: profile.email,
+          id: profile.id,
+          type:"github"
+        });
+      } else{
+        
       }
-    });
+    })
     }
 ));
 init();

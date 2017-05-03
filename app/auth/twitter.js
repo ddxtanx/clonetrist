@@ -7,7 +7,7 @@ var init = require('../init');
 passport.use(new TwitterStrategy({
     consumerKey: process.env.CONSUMER_KEY,
     consumerSecret: process.env.CONSUMER_SECRET,
-    callbackURL: "https://free-code-school-ddxtanx.c9users.io/auth/callback"
+    callbackURL: "https://clonetrist-ddxtanx.herokuapp.com/auth/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     console.log("In twitter.js");

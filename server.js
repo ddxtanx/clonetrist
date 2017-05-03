@@ -2,14 +2,16 @@ var express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
     sessions = require('client-sessions'),
-    account = require("./app/account.js");
+    account = require("./app/account.js"),
+    morgan = require('morgan'),
+    twitterAuth = require("./app/auth/twitter.js");
 app.set("views", "./public");
 app.use(express.static("./public"), bodyParser(), sessions({
   cookieName: 'session',
   secret: process.env.SESSION_SECRET,
   duration: 30 * 60 * 1000,
   activeDuration: 30 * 60 * 1000,
-}));
+}), morgan('combined'));
 function checkIn(req, res, callback){
     if(!req.session.active){
         console.log("Catching request to login only area");
@@ -43,6 +45,18 @@ app.post("/register", function(req, res){
 });
 app.post("/login", function(req, res){
     account.login(req, res);
+});
+app.get("/auth/login", function(req, res){
+    console.log("Login call");
+    twitterAuth.authenticate("twitter");
+});
+app.get("/auth/callback", function(req, res){
+    console.log("callback");
+    twitterAuth.authenticate('twitter', { failureRedirect: '/login' }),
+    function(req, res) {
+        res.redirect('/');
+        res.end();
+    };
 });
 app.get("/logout", function(req, res){
     req.session.destroy();

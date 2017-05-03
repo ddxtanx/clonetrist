@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var findOrCreate = require("mongoose-find-or-create");
 var user = process.env.USER;
 var password = process.env.PASSWORD;
 var mongoUri = "mongodb://"+user+":"+password+"@ds127731.mlab.com:27731/pintrest";
@@ -11,5 +12,6 @@ var userSchema = new schema({
     email: String,
     password: String
 });
+userSchema.plugin(findOrCreate);
 var User = mongoose.model('User', userSchema);
 module.exports.User = User;

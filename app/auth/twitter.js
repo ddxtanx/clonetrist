@@ -5,7 +5,7 @@ var passport = require('passport'),
 passport.use(new TStrategy({
     consumerKey: process.env.CONSUMER_KEY,
     consumerSecret: process.env.CONSUMER_SECRET,
-    callbackURL: '/auth/callback'
+    callbackURL: 'https://clonetrist-ddxtanx.herokuapp.com/auth/callback'
   },
   function(token, tokenSecret, profile, done) {
     console.log("infunc");

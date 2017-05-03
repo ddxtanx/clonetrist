@@ -46,10 +46,7 @@ app.post("/register", function(req, res){
 app.post("/login", function(req, res){
     account.login(req, res);
 });
-app.get("/auth/login", function(req, res){
-    console.log("Login call");
-    twitterAuth.authenticate("twitter");
-});
+app.get("/auth/login", twitterAuth.authenticate("twitter"));
 app.get("/auth/callback", function(req, res){
     console.log("callback");
     twitterAuth.authenticate('twitter', { failureRedirect: '/login' }),

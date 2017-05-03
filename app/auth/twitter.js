@@ -21,6 +21,10 @@ passport.use(new TwitterStrategy({
           email: profile.email,
           id: profile.id,
           type:"github"
+        }, function(err, data){
+          if(err) throw err;
+          console.log("User created "+data);
+          return data
         });
       } else{
         

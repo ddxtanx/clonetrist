@@ -22,7 +22,12 @@ passport.use(new GithubStrategy({
           username: profile.login,
           email: profile.email,
           id: profile.id,
+          password:"",
           type:"github"
+        }, function(err, data){
+          if(err) throw err;
+          console.log("User created "+data);
+          return data;
         });
       } else{
         

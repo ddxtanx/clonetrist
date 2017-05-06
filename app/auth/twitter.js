@@ -14,13 +14,13 @@ passport.use(new TwitterStrategy({
     console.log("In twitter.js");
     var userData = {
           username: profile.screen_name,
-          email: profile.email||"",
+          email: "",
           id: profile.id,
           password: "",
           type:"twitter"
-    }
+    };
     console.log(userData);
-    User.find({
+    User.findOne({
       id: profile.id,
       type: "twitter"
     }, function(err, users){
@@ -30,11 +30,11 @@ passport.use(new TwitterStrategy({
         User.create(userData, function(err, data){
           if(err) throw err;
           console.log("User created "+data);
-          return done(err, data)
+          return done(err, data);
         });
       } else{
         console.log("finding");
-        return done(err, users[0]);
+        return done(err, users);
       }
     });
   }

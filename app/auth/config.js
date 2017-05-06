@@ -10,4 +10,5 @@ var info = {
         callback: "https://free-code-school-ddxtanx.c9users.io/auth/twitter/callback"
     }
 };
-module.exports = info
+console.log(info.github);
+module.exports = info;

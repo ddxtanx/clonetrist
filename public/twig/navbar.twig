@@ -4,6 +4,9 @@
           <li class="nav-item active">
             <a class="nav-link" href="/">Home</a>
           </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/posts">All Posts</a>
+          </li>
         </ul>
         <ul class="navbar-nav navbar-inline">
            {% if loggedin==false or not loggedin is defined %}
@@ -16,6 +19,9 @@
             {%else%}
             <li>
                 <p class="nav-link">Welcome, {{name}}</p>
+            </li>
+            <li>
+                <a class="nav-link" href="/myboard">My Board</a>
             </li>
             <li>
                 <a class="nav-link" href="/settings"><span class="fa fa-cog fa-4"></span></a>

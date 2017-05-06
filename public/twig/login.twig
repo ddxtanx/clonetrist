@@ -17,7 +17,7 @@
                 <div class="alert {{type}}">
                     {{text}}
                 </div>
-                <form id="logForm" method="POST" action="/login">
+                <form id="logForm" method="GET" action="/auth/local/login">
                     <p id="logTitle">Login Here</p>
                     <label for="email">Email:</label>
                     <input type="email" name="email" placeholder="Email Here:"/>

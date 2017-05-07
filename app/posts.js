@@ -1,4 +1,5 @@
 var Post = require("./models/Post.js").Post;
+var exec = require('child_process').exec;
 function logData(req, res){
     if(req.user!==undefined){
         return {loggedin: req.session.active, name:req.user.username, id:req.user.id};
@@ -22,7 +23,8 @@ function getAllPosts(req, res){
     });
 }
 function add(req, res){
-    var url = req.body.url;
+    console.log(req.files);
+    var url = (req.body.url!=="")?req.body.url:"/img/"+req.files[0].filename;
     var text = req.body.text;
     var userId = req.user.id;
     var username = req.user.username
@@ -45,14 +47,38 @@ function add(req, res){
 function del(req, res){
     var postId = req.body.postId;
     var userId = req.user.id;
-    Post.remove({
+    Post.findOne({
         userId: userId,
         postId: postId
-    }, function(err, data){
+    }, function(err, post){
         if(err) throw err;
-        console.log("deleting post "+data);
-        res.writeHead(200, {"Content-Type": "text/json"});
-        res.end(JSON.stringify(data));
+        console.log(post);
+        if(post.url[0]=="/"){
+            console.log("del url");
+            console.log("~/workspace/pintrest/public"+post.url);
+            exec("rm ~/workspace/pintrest/public"+post.url, function(){
+                console.log("unlinked");
+                 Post.remove({
+                    userId: userId,
+                    postId: postId
+                }, function(err, data){
+                    if(err) throw err;
+                    console.log("deleting post "+data);
+                    res.writeHead(200, {"Content-Type": "text/json"});
+                    res.end(JSON.stringify(data));
+                });
+            });
+        } else{
+             Post.remove({
+                userId: userId,
+                postId: postId
+            }, function(err, data){
+                if(err) throw err;
+                console.log("deleting post "+data);
+                res.writeHead(200, {"Content-Type": "text/json"});
+                res.end(JSON.stringify(data));
+            });
+        }
     });
 }
 function like(req, res){

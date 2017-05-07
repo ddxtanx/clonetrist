@@ -80,7 +80,7 @@ function getComments(postId){
         }
     });
 }
-$(document).ready(function(){
+$(window).on('load', function(){
     $('.grid').masonry({
         itemSelector: '.grid-item',
         percentPosition: true
@@ -96,6 +96,7 @@ $(document).ready(function(){
         if($("image").width()==0){
             $("#image").attr("src", "/img/image-not-found.jpg");
         }
+        $("#picture").val("");
     });
     $("#image").on("error", function(){
         $("#url").val("/img/image-not-found.jpg");
@@ -151,4 +152,18 @@ $(document).ready(function(){
             }
         });
     });
+    $("#picture").change(function(event){
+        var selectedFile = event.target.files[0];
+        var reader = new FileReader();
+        
+        var imgtag = document.getElementById("image");
+        imgtag.title = selectedFile.name;
+        
+        reader.onload = function(event) {
+            imgtag.src = event.target.result;
+        };
+        reader.readAsDataURL(selectedFile);
+        $("#url").val("");
+    });
+    $(".grid").masonry();
 });

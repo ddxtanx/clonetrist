@@ -40,7 +40,7 @@
 					<div class="modal-content" id="modal-content-add">
 						<h3>Add a post</h3>
 						<hr/>
-						<form action="/add" method="POST">
+						<form action="/add" method="POST" enctype="multipart/form-data">
 							<img id="image" src=""/>
 							<br/>
 							<label for="text">Text:</label>
@@ -50,6 +50,12 @@
 							<label for="url">Url: </label>
 							<br/>
 							<input type="url" name="url" id="url"/>
+							<br/>
+							<h4>Or:</h4>
+							<label for="file">Upload A File:</label>
+							<br/>
+							<input type="file" id="picture" name="picture"/>
+							<br/>
 							<br/>
 							<button type="submit" name="submit" class="btn btn-submit">Submit</button>
 						</form>

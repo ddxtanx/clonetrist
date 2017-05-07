@@ -7,7 +7,9 @@ var express = require('express'),
     twitterAuth = require("./app/auth/twitter.js"),
     githubAuth = require("./app/auth/github.js"),
     auth = require("./app/auth/local.js"),
-    posts = require("./app/posts.js");
+    posts = require("./app/posts.js"),
+    multer = require("multer");
+var upload = multer({ dest: './public/img' });
 app.set("views", "./public");
 app.use(express.static("./public"), bodyParser(), sessions({
   cookieName: 'session',
@@ -110,7 +112,7 @@ app.get("/myboard", function(req, res){
         posts.getMyPosts(req, res);
     });
 });
-app.post("/add", function(req, res){
+app.post("/add", upload.any(), function(req, res){
     checkIn(req, res, function(){
         posts.add(req, res);
     });

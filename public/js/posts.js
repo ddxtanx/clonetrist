@@ -94,12 +94,11 @@ function getComments(postId){
         }
     });
 }
-$(document).ready(function(){
+$(window).on('load', function(){
     $('.grid').masonry({
         itemSelector: '.grid-item',
         columnWidth: 200
     });
-    $(".grid").masonry();
     $(".like").click(function(){
         var ele = $(this);
         var id = ele.attr('for-post');
@@ -137,4 +136,5 @@ $(document).ready(function(){
             getComments(postId);
         }
     });
+    $(".grid").masonry();
 });

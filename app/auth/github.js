@@ -17,7 +17,6 @@ passport.use(new GithubStrategy({
         password: "",
         type: "github"
       };
-      console.log("In github.js");
     User.findOne({
       id: profile.id,
       type: "github"

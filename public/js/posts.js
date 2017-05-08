@@ -75,7 +75,6 @@ function getComments(postId){
                         postId: postId
                     },
                     success: function(liked){
-                        console.log(liked);
                         if(liked=="true"){
                             var likes = parseInt(ele.attr('likes'))+1;
                             ele.attr('likes', likes);

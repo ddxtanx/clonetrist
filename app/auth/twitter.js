@@ -10,8 +10,6 @@ passport.use(new TwitterStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     profile = profile._json;
-    console.log(profile);
-    console.log("In twitter.js");
     var userData = {
           username: profile.screen_name,
           email: "",
@@ -19,21 +17,17 @@ passport.use(new TwitterStrategy({
           password: "",
           type:"twitter"
     };
-    console.log(userData);
     User.findOne({
       id: profile.id,
       type: "twitter"
     }, function(err, users){
       if(err) throw err;
       if(users.length==0){
-          console.log("creating");
         User.create(userData, function(err, data){
           if(err) throw err;
-          console.log("User created "+data);
           return done(err, data);
         });
       } else{
-        console.log("finding");
         return done(err, users);
       }
     });

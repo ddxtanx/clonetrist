@@ -88,9 +88,6 @@ function getComments(postId){
                     }
                 });
             });
-        },
-        error: function(){
-            
         }
     });
 }

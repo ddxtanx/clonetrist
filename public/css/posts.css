@@ -44,3 +44,8 @@
 .comment{
     margin: .5em .5em .5em .5em;
 }
+#close{
+    position: fixed;
+    left: 0;
+    top: 0;
+}

@@ -41,3 +41,8 @@
 .red{
     color: red;
 }
+#close{
+    position: fixed;
+    left: 0;
+    top: 0;
+}

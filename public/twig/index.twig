@@ -14,9 +14,21 @@
 		<div id="page">
 			{%include "twig/navbar.twig"%}
 			<div id="main-content">
-				<h1 class="title">Welcome to Clonetrist!</h1>
-				<div id="sub-content">
-					
+				<h1 class="title">Clonetrist!</h1>
+				<h3 class="sub">Pintrest, but easier!</h3>
+				{%if not loggedin%}
+				<h4>Welcome to Clonetrist! Please <a href="/login">Login</a> or <a href="/register">Register!</a></h4>
+				{%endif%}
+				<div id="sub">
+					<h4>Here you can:</h4>
+					<ul>
+						<li>Create a free account</li>
+						<li>Login via the site, or Twitter or Github</li>
+						<li>Link to, or upload images with captions</li>
+						<li>View, like, and comment on other people's posts.</li>
+						<li>View the likes and comments on your posts</li>
+					</ul>
+					<h3>So what are you waiting for? Get started!</h3>
 				</div>
 			</div>
 		</div>
